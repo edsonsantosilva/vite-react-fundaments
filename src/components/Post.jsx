@@ -7,7 +7,7 @@ export default function Post () {
 				<div className={styles.author}>
 					<img className={styles.avatar} src="https://github.com/edsonsantosilva.png" alt="" />
 					<div className={styles.authorInfo}>
-						<strong>Edson Silva</strong>
+						<strong>Edson Silva</strong>{' '}
 						<span>Web Developer</span>
 					</div>
 				</div>
@@ -17,7 +17,8 @@ export default function Post () {
 			<div className={styles.content}>
 				<p>This is the post title</p>
 				<p>This is the post text</p>
-				<p>These are the tas: #dev #react</p>
+				<a href="https://github.com/edsonsantosilva">Github Link</a>
+				<p>These are the tas: <a href="https://github.com/edsonsantosilva">#dev #react</a></p>
 			</div>
 		</article>
 	)

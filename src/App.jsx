@@ -1,7 +1,8 @@
+import './global.css'
+
 import Header from "./components/Header"
 import Post from "./components/Post"
 import Sidebar from "./components/Sidebar"
-import './global.css'
 import styles from './App.module.css'
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
+          <Post author="Edson" content="Lorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elit"/>
           <Post author="Edson" content="Lorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elit"/>
         </main>
       </div>
