@@ -11,12 +11,18 @@
 	--green-300: #00B373;
 	--green-500: #00875f;
 
+	--red-500: #F75A68;
+
 }
 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+:focus {
+	outline: 1px solid var(--green-300);
 }
 
 body {
