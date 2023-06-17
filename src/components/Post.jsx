@@ -1,31 +1,53 @@
+import { format, formatDistanceToNow } from "date-fns";
+
+import Avatar from "./Avatar";
 import { Comment } from "./Comment";
+import enUS from "date-fns/locale/en-US";
 import styles from "./Post.module.css";
 
-export default function Post() {
+export default function Post({ author, publishedAt, content }) {
+	const publishedDateFormatted = format(
+		publishedAt,
+		"LLL do 'at' h':'mm b..bb",
+		{
+			locale: enUS,
+		}
+	);
+
+	const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+		locale: enUS,
+		addSuffix: true,
+	});
 	return (
 		<article className={styles.post}>
 			<header>
 				<div className={styles.author}>
-					<img
-						className={styles.avatar}
-						src="https://github.com/edsonsantosilva.png"
-						alt=""
-					/>
+					<Avatar src="https://github.com/edsonsantosilva.png" />
 					<div className={styles.authorInfo}>
-						<strong>Edson Silva</strong> <span>Web Developer</span>
+						<strong>{author.name}</strong>
+						<span>{author.role}</span>
 					</div>
 				</div>
-				<time dateTime="2023-03-10">Post 1h ago</time>
+				<time
+					title={publishedDateFormatted}
+					dateTime={publishedAt.toISOString()}
+				>
+					{publishedDateRelativeToNow}
+				</time>
 			</header>
 
 			<div className={styles.content}>
-				<p>This is the post title</p>
-				<p>This is the post text</p>
-				<a href="https://github.com/edsonsantosilva">Github Link</a>
-				<p>
-					These are the tas:{" "}
-					<a href="https://github.com/edsonsantosilva">#dev #react</a>
-				</p>
+				{content.map((line) => {
+					if (line.type === "paragraph") {
+						return <p>{line.content}</p>;
+					} else if (line.type === "link") {
+						return (
+							<p>
+								<a href="#">{line.content}</a>
+							</p>
+						);
+					}
+				})}
 			</div>
 
 			<form className={styles.commentForm}>
