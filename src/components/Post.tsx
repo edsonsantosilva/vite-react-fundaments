@@ -1,12 +1,29 @@
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 import { format, formatDistanceToNow } from "date-fns";
 
 import Avatar from "./Avatar";
 import { Comment } from "./Comment";
 import enUS from "date-fns/locale/en-US";
 import styles from "./Post.module.css";
-import { useState } from "react";
 
-export default function Post({ author, publishedAt, content }) {
+interface Author {
+	name: string;
+	role: string;
+	avatarUrl: string;
+}
+
+interface Content {
+	type: "paragraph" | "link";
+	content: string;
+}
+
+interface PostProps {
+	author: Author;
+	publishedAt: Date;
+	content: Content[];
+}
+
+export default function Post({ author, publishedAt, content }: PostProps) {
 	const [comments, setComments] = useState(["Really nice"]);
 	const [newCommentText, setNewCommentText] = useState("");
 
@@ -23,21 +40,21 @@ export default function Post({ author, publishedAt, content }) {
 		addSuffix: true,
 	});
 
-	function handleCreateNewComment(event) {
+	function handleCreateNewComment(event: FormEvent) {
 		event.preventDefault();
 		setComments([...comments, newCommentText]);
 		setNewCommentText("");
 	}
 
-	function handleNewCommentChange() {
+	function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
 		setNewCommentText(event.target.value);
 	}
 
-	function handleNewCommentInvalid() {
+	function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
 		event.target.setCustomValidity("Your comment is empty");
 	}
 
-	function deleteComment(commentToDelete) {
+	function deleteComment(commentToDelete: string) {
 		const comentsWithoutDeletedOne = comments.filter((comment) => {
 			return comment !== commentToDelete;
 		});
