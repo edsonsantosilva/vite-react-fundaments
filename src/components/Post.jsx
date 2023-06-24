@@ -17,18 +17,35 @@ export default function Post({ author, publishedAt, content }) {
 			locale: enUS,
 		}
 	);
+
 	const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
 		locale: enUS,
 		addSuffix: true,
 	});
+
 	function handleCreateNewComment(event) {
 		event.preventDefault();
 		setComments([...comments, newCommentText]);
+		setNewCommentText("");
 	}
 
 	function handleNewCommentChange() {
 		setNewCommentText(event.target.value);
 	}
+
+	function handleNewCommentInvalid() {
+		event.target.setCustomValidity("Your comment is empty");
+	}
+
+	function deleteComment(commentToDelete) {
+		const comentsWithoutDeletedOne = comments.filter((comment) => {
+			return comment !== commentToDelete;
+		});
+
+		setComments(comentsWithoutDeletedOne);
+	}
+
+	const isNewCommentEmpty = newCommentText.length === 0;
 	return (
 		<article className={styles.post}>
 			<header>
@@ -67,15 +84,25 @@ export default function Post({ author, publishedAt, content }) {
 					onChange={handleNewCommentChange}
 					value={newCommentText}
 					placeholder="Leave your comments"
+					onInvalid={handleNewCommentInvalid}
+					required
 				/>
 				<footer>
-					<button type="submit">Comment</button>
+					<button type="submit" disabled={isNewCommentEmpty}>
+						Comment
+					</button>
 				</footer>
 			</form>
 
 			<div className={styles.commentList}>
 				{comments.map((comment, index) => {
-					return <Comment key={`${index} - ${comment}`} content={comment} />;
+					return (
+						<Comment
+							key={`${index} - ${comment}`}
+							content={comment}
+							onDeleteComment={deleteComment}
+						/>
+					);
 				})}
 			</div>
 		</article>
