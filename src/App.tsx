@@ -1,11 +1,12 @@
 import "./global.css";
 
+import { Post, PostType } from "./components/Post";
+
 import Header from "./components/Header";
-import Post from "./components/Post";
 import Sidebar from "./components/Sidebar";
 import styles from "./App.module.css";
 
-const posts = [
+const posts: Array<PostType> = [
 	{
 		id: 1,
 		author: {
@@ -44,14 +45,7 @@ export default function App() {
 				<Sidebar />
 				<main>
 					{posts.map((post) => {
-						return (
-							<Post
-								key={post.id}
-								author={post.author}
-								content={post.content}
-								publishedAt={post.publishedAt}
-							/>
-						);
+						return <Post key={post.id} post={post} />;
 					})}
 				</main>
 			</div>
